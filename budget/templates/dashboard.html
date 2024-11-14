@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Welcome, {{ user.username }}!</h1>
+
+    <section>
+        <h2>Your Budget Goals</h2>
+        {% if user_goals %}
+            <ul>
+                {% for goal in user_goals %}
+                    <li>{{ goal.goal_name }} - {{ goal.goal_description }}: {{ goal.goal_value }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No budget goals set yet.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2>Your Budgets</h2>
+        {% if budgets %}
+            <ul>
+                {% for budget in budgets %}
+                    <li>{{ budget.name }} - {{ budget.date }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No budgets created yet.</p>
+        {% endif %}
+    </section>
+{% endblock %}

@@ -10,7 +10,7 @@
     <header>
         {% if user.is_authenticated %}
             <nav>
-                <a href='#'>Home</a>
+                <a href='{% url "dashboard" %}'>Home</a>
                 <a href='#'>Budgets</a>
                 <a href='#'>Logout</a>
             </nav>
