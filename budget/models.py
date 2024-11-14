@@ -23,7 +23,7 @@ class Budget(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     date = models.DateField()
-    budget = models.ManyToManyField(Category, related_name='category')
+    category = models.ManyToManyField(Category, related_name='category')
 
     def __str__(self):
         return f'{self.name} - {self.date.strftime("%B %Y")}'
