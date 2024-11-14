@@ -15,12 +15,15 @@ class UserRegisterForm(UserCreationForm):
 class UserLoginForm(AuthenticationForm):
     pass
 
-class BudgetForm(Budget):
+class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
         fields = ('name', 'date')
         labels = {
             'name':'Budget name',
             'date':'Date',
+        }
+        widgets = {
+            'date': forms.DateInput(format='%Y-%m-%d', attrs={'placeholder': 'YYYY-MM-DD', 'type': 'date'})
         }
             

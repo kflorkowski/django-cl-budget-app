@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, BudgetForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Budget, UserGoal
@@ -50,3 +50,15 @@ def dashboard(request):
         'user_goals': user_goals,
     }
     return render(request, 'dashboard.html', context)
+
+def create_budget(request):
+    if request.method == 'POST':
+        form = BudgetForm(request.POST)
+        if form.is_valid():
+            budget = form.save(commit=False)
+            budget.owner = request.user
+            budget.save()
+            return redirect('dashboard')
+    else:
+        form = BudgetForm()
+    return render(request, 'create_budget.html', {'form': form})
