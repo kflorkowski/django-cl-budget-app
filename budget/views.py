@@ -50,3 +50,15 @@ def dashboard(request):
     # }
     # return render(request, 'dashboard.html', context)
     return render(request, 'dashboard.html')
+
+@login_required
+def budgets(request):
+    return render(request, 'budgets.html')
+
+@login_required
+def goals(request):
+    return render(request, 'goals.html')
+
+@login_required
+def transactions(request):
+    return render(request, 'transactions.html')

@@ -13,7 +13,9 @@
         {% if user.is_authenticated %}
             <nav>
                 <a href='{% url "dashboard" %}'>Home</a>
-                <a href='#'>Budgets</a>
+                <a href='{% url "budgets" %}'>Budgets</a>
+                <a href='{% url "goals" %}'>Goals</a>
+                <a href='{% url "transactions" %}'>Transaction History</a>
                 <a href='{% url "logout" %}'>Logout</a>
             </nav>
         {% else %}
