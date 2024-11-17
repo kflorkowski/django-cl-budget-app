@@ -32,7 +32,7 @@ class Expense(models.Model):
     name = models.CharField(max_length=128)
     amount = models.DecimalField(max_digits=21, decimal_places=2)
     category = models.ForeignKey(Category, related_name='expense', on_delete=models.CASCADE)
-    date = models.DateField(default=now)
+    date = models.DateField()
 
     def __str__(self):
         return f'{self.name}: {self.amount}'
@@ -42,7 +42,7 @@ class Income(models.Model):
     name = models.CharField(max_length=128)
     amount = models.DecimalField(max_digits=21, decimal_places=2)
     category = models.ForeignKey(Category, related_name='income', on_delete=models.CASCADE)
-    date = models.DateField(default=now)
+    date = models.DateField()
 
     def __str__(self):
         return f'{self.name}: {self.amount}'
