@@ -4,7 +4,7 @@
 <h1>Welcome, {{ user.username }}!</h1>
 
     <section>
-        <h2>Your Budget Goals</h2>
+        <h2>Your Goals</h2>
         {% if user_goals %}
             <ul>
                 {% for goal in user_goals %}
@@ -27,6 +27,6 @@
         {% else %}
             <p>No budgets created yet.</p>
         {% endif %}
-        <a href="{% url 'create_budget' %}">Create New Budget</a>
+        <a href="#">Create New Budget</a>
     </section>
 {% endblock %}
