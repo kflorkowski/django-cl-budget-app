@@ -3,8 +3,8 @@
 {% block content %}
     <section>
         <h2></h2>
-        {% if Expenses %}
-            {% for expense in Expenses %}
+        {% if expenses %}
+            {% for expense in expenses %}
                 <li>{{ expense.name }}: {{ expense.amount }} on {{ expense.date }} | {{ expense.category}}</li>
             {% endfor %}
         {% else %}
@@ -15,8 +15,8 @@
 
     <section>
         <h2></h2>
-        {% if Incomes %}
-            {% for income in Incomes %}
+        {% if incomes %}
+            {% for income in incomes %}
                 <li>{{ income.name }}: {{ income.amount }} on {{ income.date }} | {{ income.category}}</li>
             {% endfor %}
         {% else %}
