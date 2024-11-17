@@ -8,12 +8,13 @@
         {% if user_goals %}
             <ul>
                 {% for goal in user_goals %}
-                    <li>{{ goal.goal_name }} - {{ goal.goal_description }}: {{ goal.goal_value }}</li>
+                    <li>{{ goal.name }}: 0 z {{ goal.target_amount }} | 0.00%</li>
                 {% endfor %}
             </ul>
         {% else %}
             <p>No budget goals set yet.</p>
         {% endif %}
+        <a href="{% url 'add_goal' %}">Create New Goal</a>
     </section>
 
     <section>

@@ -1,5 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <section>
+        <h3>My Goals</h2>
+        {% if my_goals %}
+            {% for my_goal in my_goals %}
+                <li>{{ my_goal.name }}: 0 z {{ my_goal.target_amount }} | 0.00%</li>
+                <p>{{ my_goal.description }}</p>
+                <a href="#">Donate</a>
+                <a href="#">Edit</a>
+            {% endfor %}
+        {% else %}
+            <p>No record yet.</p>
+        {% endif %}
+        <a href='{% url "add_goal" %}'>Create New my_goal</a>
+    </section>
 
+    <section>
+        <h3>Others Goals</h2>
+        {% if others_goals %}
+            {% for oth_goal in others_goals %}
+                <li>{{ oth_goal.name }}: 0 z {{ oth_goal.target_amount }} | 0.00%</li>
+                <p>{{ oth_goal.description }}</p>
+                <a href="#">Donate</a>
+            {% endfor %}
+        {% else %}
+            <p>No record yet.</p>
+        {% endif %}
+    </section>
 {% endblock  %}

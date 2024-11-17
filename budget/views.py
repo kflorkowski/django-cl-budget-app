@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm
+from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm, GoalForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Income, Expense
+from .models import Income, Expense, Goal
 
 # Create your views here.
 def base(request):
@@ -43,14 +43,13 @@ def user_logout(request):
 @login_required
 def dashboard(request):
     # budgets = Budget.objects.filter(owner=request.user)
-    # user_goals = UserGoal.objects.filter(user=request.user)
+    user_goals = Goal.objects.filter(owner=request.user)
 
-    # context = {
+    context = {
     #     'budgets': budgets,
-    #     'user_goals': user_goals,
-    # }
-    # return render(request, 'dashboard.html', context)
-    return render(request, 'dashboard.html')
+        'user_goals': user_goals,
+    }
+    return render(request, 'dashboard.html', context)
 
 @login_required
 def budgets(request):
@@ -58,7 +57,21 @@ def budgets(request):
 
 @login_required
 def goals(request):
-    return render(request, 'goals.html')
+    my_goals = Goal.objects.filter(owner=request.user)
+    others_goals = Goal.objects.exclude(owner=request.user)
+    return render(request, 'goals.html', {'my_goals':my_goals, 'others_goals': others_goals})
+
+def add_goal(request):
+    if request.method == 'POST':
+        form = GoalForm(request.POST)
+        if form.is_valid():
+            goal = form.save(commit=False)
+            goal.owner = request.user
+            goal = form.save()
+            return redirect('goals')
+    else:
+        form = GoalForm()
+    return render(request, 'add_goal.html', {'form':form})
 
 @login_required
 def transactions(request):
