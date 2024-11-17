@@ -5,7 +5,9 @@
         <h2></h2>
         {% if expenses %}
             {% for expense in expenses %}
-                <li>{{ expense.name }}: {{ expense.amount }} on {{ expense.date }} | {{ expense.category}}</li>
+                <li>{{ expense.name }}: {{ expense.amount }} on {{ expense.date }} | {{ expense.category}}
+                    <a href="{% url 'edit_expense' expense.id %}">Edit</a>
+                </li>
             {% endfor %}
         {% else %}
             <p>No record yet.</p>
@@ -17,7 +19,9 @@
         <h2></h2>
         {% if incomes %}
             {% for income in incomes %}
-                <li>{{ income.name }}: {{ income.amount }} on {{ income.date }} | {{ income.category}}</li>
+                <li>{{ income.name }}: {{ income.amount }} on {{ income.date }} | {{ income.category}}
+                    <a href="{% url 'edit_income' income.id %}">Edit</a>
+                </li>
             {% endfor %}
         {% else %}
             <p>No record yet.</p>

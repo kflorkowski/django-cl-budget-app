@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm
 from django.contrib.auth import authenticate, login, logout
@@ -91,3 +91,28 @@ def add_expense(request):
     else:
         form = ExpenseForm()
     return render(request, 'add_expense.html', {'form': form})
+
+def edit_income(request, transaction_id):
+    transaction = get_object_or_404(Income, id=transaction_id)
+    form = IncomeForm(request.POST or None, instance=transaction)
+    if request.method == 'POST':
+        if 'edit' in request.POST and form.is_valid():
+            form.save()
+            return redirect('transactions')
+        elif 'delete' in request.POST:
+            transaction.delete()
+            return redirect('transactions')
+    return render(request, 'edit_transaction.html', {'form': form, 'type': 'income'})
+
+
+def edit_expense(request, transaction_id):
+    transaction = get_object_or_404(Expense, id=transaction_id)
+    form = ExpenseForm(request.POST or None, instance=transaction)
+    if request.method == 'POST':
+        if 'edit' in request.POST and form.is_valid():
+            form.save()
+            return redirect('transactions')
+        elif 'delete' in request.POST:
+            transaction.delete()
+            return redirect('transactions')
+    return render(request, 'edit_transaction.html', {'form': form, 'type': 'expense'})

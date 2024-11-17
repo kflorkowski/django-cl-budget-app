@@ -10,6 +10,8 @@ urlpatterns = [
     path('budgets', views.budgets ,name='budgets'),
     path('goals', views.goals ,name='goals'),
     path('transactions', views.transactions ,name='transactions'),
-    path('add-income', views.add_income, name='add_income'),
-    path('add-expense', views.add_expense, name='add_expense'),
+    path('transactions/add-income', views.add_income, name='add_income'),
+    path('transactions/add-expense', views.add_expense, name='add_expense'),
+    path('transactions/edit-income/<int:transaction_id>', views.edit_income, name='edit_income'),
+    path('transactions/edit-expense/<int:transaction_id>', views.edit_expense, name='edit_expense'),
 ]
