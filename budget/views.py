@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .models import Income, Expense
 
 # Create your views here.
 def base(request):
@@ -61,4 +62,32 @@ def goals(request):
 
 @login_required
 def transactions(request):
-    return render(request, 'transactions.html')
+    expenses = Expense.objects.filter(user=request.user)
+    incomes = Income.objects.filter(user=request.user)
+    return render(request, 'transactions.html', {'expenses':expenses, 'incomes':incomes})
+
+@login_required
+def add_income(request):
+    if request.method == 'POST':
+        form = IncomeForm(request.POST)
+        if form.is_valid():
+            income = form.save(commit=False)
+            income.user = request.user
+            income = form.save()
+            return redirect('transactions')
+    else:
+        form = IncomeForm()
+    return render(request, 'add_income.html', {'form': form})
+
+@login_required
+def add_expense(request):
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST)
+        if form.is_valid():
+            expense = form.save(commit=False)
+            expense.user = request.user
+            expense = form.save()
+            return redirect('transactions')
+    else:
+        form = ExpenseForm()
+    return render(request, 'add_expense.html', {'form': form})

@@ -1,5 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <section>
+        <h2></h2>
+        {% if Expenses %}
+            {% for expense in Expenses %}
+                <li>{{ expense.name }}: {{ expense.amount }} on {{ expense.date }} | {{ expense.category}}</li>
+            {% endfor %}
+        {% else %}
+            <p>No record yet.</p>
+        {% endif %}
+        <a href='{% url "add_expense" %}'>Create New Expense</a>
+    </section>
 
+    <section>
+        <h2></h2>
+        {% if Incomes %}
+            {% for income in Incomes %}
+                <li>{{ income.name }}: {{ income.amount }} on {{ income.date }} | {{ income.category}}</li>
+            {% endfor %}
+        {% else %}
+            <p>No record yet.</p>
+        {% endif %}
+        <a href='{% url "add_income" %}'>Create New Income</a>
+    </section>
 {% endblock  %}

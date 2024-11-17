@@ -10,4 +10,6 @@ urlpatterns = [
     path('budgets', views.budgets ,name='budgets'),
     path('goals', views.goals ,name='goals'),
     path('transactions', views.transactions ,name='transactions'),
+    path('add-income', views.add_income, name='add_income'),
+    path('add-expense', views.add_expense, name='add_expense'),
 ]
