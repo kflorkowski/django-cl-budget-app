@@ -44,10 +44,14 @@ def user_logout(request):
 def dashboard(request):
     # budgets = Budget.objects.filter(owner=request.user)
     user_goals = Goal.objects.filter(owner=request.user)
+    user_contribution = Contribution.objects.filter(contributor=request.user)
+    other_contribution = Contribution.objects.exclude(contributor=request.user).filter(goal__in=user_goals)
 
     context = {
     #     'budgets': budgets,
         'user_goals': user_goals,
+        'user_contribution': user_contribution,
+        'other_contribution': other_contribution,
     }
     return render(request, 'dashboard.html', context)
 

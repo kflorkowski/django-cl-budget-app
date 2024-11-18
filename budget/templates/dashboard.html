@@ -30,4 +30,29 @@
         {% endif %}
         <a href="#">Create New Budget</a>
     </section>
+
+    <section>
+        <h2>Yor contribution</h2>
+        {% if user_contribution %}
+            <ul>
+                {% for contribution in user_contribution %}
+                    <li>{{contribution.amount}}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No contribution made yet.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2>Contribution to your goals</h2>
+        {% if other_contribution %}
+            <ul>
+                {% for contribution in other_contribution %}
+                    <li>Goal: {{contribution.goal.name}} | {{contribution.contributor}} donated: {{contribution.amount}}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+        {% endif %}
+    </section>
 {% endblock %}
