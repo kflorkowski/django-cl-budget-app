@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Income, Expense, Goal
+from .models import Income, Expense, Goal, Contribution
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -47,3 +47,14 @@ class GoalForm(forms.ModelForm):
         model = Goal
         fields = ('name', 'description', 'target_amount')
         exclude = ['contributor']
+
+class ContributionForm(forms.ModelForm):
+    class Meta:
+        model = Contribution
+        fields = ['amount']
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if amount <= 0:
+            raise forms.ValidationError('Amount must be positive.')
+        return amount

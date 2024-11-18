@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm, GoalForm
+from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm, GoalForm, ContributionForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Income, Expense, Goal
+from .models import Income, Expense, Goal, Contribution
 
 # Create your views here.
 def base(request):
@@ -59,7 +59,7 @@ def budgets(request):
 def goals(request):
     my_goals = Goal.objects.filter(owner=request.user)
     others_goals = Goal.objects.exclude(owner=request.user)
-    return render(request, 'goals.html', {'my_goals':my_goals, 'others_goals': others_goals})
+    return render(request, 'goals.html', {'my_goals':my_goals, 'others_goals':others_goals})
 
 def add_goal(request):
     if request.method == 'POST':
@@ -72,6 +72,21 @@ def add_goal(request):
     else:
         form = GoalForm()
     return render(request, 'add_goal.html', {'form':form})
+
+def donation(request, goal_id):
+    goal = get_object_or_404(Goal, id=goal_id)
+
+    if request.method == 'POST':
+        form = ContributionForm(request.POST)
+        if form.is_valid():
+            contribution = form.save(commit=False)
+            contribution.goal = goal
+            contribution.contributor = request.user
+            contribution.save()
+            return redirect('goals')
+    else:
+        form = ContributionForm
+    return render(request, 'donate.html', {'form':form, 'goal':goal})
 
 @login_required
 def transactions(request):
