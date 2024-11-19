@@ -2,30 +2,34 @@
 
 {% block content %}
     <section>
-        <h3>My Goals</h2>
+        <h3>My Goals</h3>
         {% if my_goals %}
-            {% for my_goal in my_goals %}
-                <li>{{ my_goal.name }}: 0 z {{ my_goal.target_amount }} | 0.00%</li>
-                <p>{{ my_goal.description }}</p>
-                <a href="{% url 'donation' my_goal.id %}">Donate</a>
-                <a href="#">Edit</a>
-            {% endfor %}
+            <ul>
+                {% for my_goal in my_goals %}
+                    <li>{{ my_goal.name }}: {{ my_goal.current_amount }} z {{ my_goal.target_amount }} | {{ my_goal.current_percentage }}%</li>
+                    <p>{{ my_goal.description }}</p>
+                    <a href="{% url 'donation' my_goal.id %}">Donate</a>
+                    <a href="#">Edit</a>
+                {% endfor %}
+            </ul>
         {% else %}
             <p>No record yet.</p>
         {% endif %}
-        <a href='{% url "add_goal" %}'>Create New my_goal</a>
+        <a href='{% url "add_goal" %}'>Create New Goal</a>
     </section>
 
     <section>
-        <h3>Others Goals</h2>
+        <h3>Others Goals</h3>
         {% if others_goals %}
-            {% for oth_goal in others_goals %}
-                <li>{{ oth_goal.name }}: 0 z {{ oth_goal.target_amount }} | 0.00%</li>
-                <p>{{ oth_goal.description }}</p>
-                <a href="{% url 'donation' oth_goal.id %}">Donate</a>
-            {% endfor %}
+            <ul>
+                {% for oth_goal in others_goals %}
+                    <li>{{ oth_goal.name }}: {{ oth_goal.current_amount }} z {{ oth_goal.target_amount }} | {{ oth_goal.current_percentage }}%</li>
+                    <p>{{ oth_goal.description }}</p>
+                    <a href="{% url 'donation' oth_goal.id %}">Donate</a>
+                {% endfor %}
+            </ul>
         {% else %}
             <p>No record yet.</p>
         {% endif %}
     </section>
-{% endblock  %}
+{% endblock %}

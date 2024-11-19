@@ -1,29 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome, {{ user.username }}!</h1>
+    <h1>Welcome, {{ user.username }}!</h1>
 
     <section>
         <h2>Your Goals</h2>
         {% if user_goals %}
             <ul>
-                {% for goal in user_goals %}
-                    <li>{{ goal.name }}: 0 z {{ goal.target_amount }} | 0.00%</li>
+                {% for entry in user_goals %}
+                    <li>
+                        {{ entry.goal.name }}: {{ entry.total_contributions|floatformat:2 }} z {{ entry.goal.target_amount }} | {{ entry.progress|floatformat:2 }}%
+                    </li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No budget goals set yet.</p>
+            <p>No goals set yet.</p>
         {% endif %}
-        <a href="{% url 'add_goal' %}">Create New Goal</a>
     </section>
 
     <section>
-        <h2>Your Budgets</h2>
-        {% if budgets %}
+        <h2>Previous Month Budget</h2>
+        {% if category_summary %}
             <ul>
-                {% for budget in budgets %}
-                    <li>{{ budget.name }} - {{ budget.date }}</li>
+                {% for summary in category_summary %}
+                    <li>
+                        <strong>{{ summary.category.name }}</strong> - 
+                        Expenses: {{ summary.total_expenses_in_category }} PLN | 
+                        Incomes: {{ summary.total_incomes_in_category }} PLN
+                    </li>
                 {% endfor %}
+                <p>Total Expenses: {{ total_expenses }} PLN</p>
+                <p>Total Incomes: {{ total_incomes }} PLN</p>
+                <p>Total Balance: {{ total_balance }} PLN</p>
             </ul>
         {% else %}
             <p>No budgets created yet.</p>
@@ -31,27 +39,28 @@
     </section>
 
     <section>
-        <h2>Yor contribution</h2>
+        <h2>Your Contribution</h2>
         {% if user_contribution %}
             <ul>
                 {% for contribution in user_contribution %}
-                    <li>Goal: {{contribution.goal.name}} | donated: {{contribution.amount}}</li>
+                    <li>Goal: {{ contribution.goal.name }} | Donated: {{ contribution.amount }}</li>
                 {% endfor %}
             </ul>
         {% else %}
-            <p>No contribution made yet.</p>
+            <p>No contributions made yet.</p>
         {% endif %}
     </section>
 
     <section>
-        <h2>Contribution to your goals</h2>
+        <h2>Contributions to Your Goals</h2>
         {% if other_contribution %}
             <ul>
                 {% for contribution in other_contribution %}
-                    <li>Goal: {{contribution.goal.name}} | {{contribution.contributor}} donated: {{contribution.amount}}</li>
+                    <li>Goal: {{ contribution.goal.name }} | {{ contribution.contributor }} donated: {{ contribution.amount }}</li>
                 {% endfor %}
             </ul>
         {% else %}
+            <p>No contributions to your goals yet.</p>
         {% endif %}
     </section>
 {% endblock %}
