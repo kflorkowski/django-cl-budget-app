@@ -9,7 +9,6 @@
                     <li>{{ my_goal.name }}: {{ my_goal.current_amount }} z {{ my_goal.target_amount }} | {{ my_goal.current_percentage }}%</li>
                     <p>{{ my_goal.description }}</p>
                     <a href="{% url 'donation' my_goal.id %}">Donate</a>
-                    <a href="#">Edit</a>
                 {% endfor %}
             </ul>
         {% else %}

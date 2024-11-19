@@ -3,11 +3,11 @@
 {% block content %}
     <div>
         <h2>Donate to goal: {{ goal.name }} | {{ goal.owner }}</h2>
-        <form method='POST'>
+        <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
             <div>
-                <button type='submit'>Donate</button>
+                <button type="submit">Donate</button>
             </div>
         </form>
     </div>

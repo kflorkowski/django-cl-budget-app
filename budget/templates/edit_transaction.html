@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if request.resolver_match.url_name == 'edit_expense' %}
+    {% if request.resolver_match.url_name == "edit_expense" %}
         <div>
             <h2>Edit Expense</h2>
-            <form method='POST'>
+            <form method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
                 <div>
@@ -13,10 +13,10 @@
                 </div>
             </form>
         </div>
-    {% elif request.resolver_match.url_name == 'edit_income' %}
+    {% elif request.resolver_match.url_name == "edit_income" %}
         <div>
             <h2>Edit Income</h2>
-            <form method='POST'>
+            <form method="POST">
                 {% csrf_token %}
                 {{form.as_p}}
                 <div>
@@ -26,5 +26,5 @@
             </form>
         </div>
     {% endif %}
-    <a href="{% url 'transactions' %}">Back to Transactions</a>
+    <a href="{% url "transactions" %}">Back to Transactions</a>
 {% endblock  %}

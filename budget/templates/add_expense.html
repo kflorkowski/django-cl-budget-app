@@ -3,11 +3,11 @@
 {% block content %}
     <div>
         <h2>Add Expense</h2>
-        <form method=POST>
+        <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
             <div>
-                <button type='submit'>Add Expense</button>
+                <button type="submit">Add Expense</button>
             </div>
         </form>
     </div>
