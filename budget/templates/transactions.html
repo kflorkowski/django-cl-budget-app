@@ -2,7 +2,7 @@
 
 {% block content %}
     <section>
-        <h2></h2>
+        <h2>Outcome</h2>
         {% if expenses %}
             {% for expense in expenses %}
                 <li>{{ expense.name }}: {{ expense.amount }} on {{ expense.date }} | {{ expense.category}}
@@ -16,7 +16,7 @@
     </section>
 
     <section>
-        <h2></h2>
+        <h2>Income</h2>
         {% if incomes %}
             {% for income in incomes %}
                 <li>{{ income.name }}: {{ income.amount }} on {{ income.date }} | {{ income.category}}
