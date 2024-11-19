@@ -4,6 +4,8 @@ from .forms import UserRegisterForm, UserLoginForm, IncomeForm, ExpenseForm, Goa
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Income, Expense, Goal, Contribution
+from django.db.models import Sum
+from datetime import datetime
 
 # Create your views here.
 def base(request):
@@ -148,3 +150,36 @@ def edit_expense(request, transaction_id):
             transaction.delete()
             return redirect('transactions')
     return render(request, 'edit_transaction.html', {'form': form, 'type': 'expense'})
+
+def budgets(request):
+    start_date = request.GET.get('start_date', datetime.today().replace(day=1).strftime('%Y-%m-%d'))
+    end_date = request.GET.get('end_date', datetime.today().strftime('%Y-%m-%d'))
+
+    try:
+        start_date_obj = datetime.strptime(start_date, '%Y-%m-%d')
+        end_date_obj = datetime.strptime(end_date, '%Y-%m-%d')
+    except ValueError:
+        start_date_obj = datetime.today().replace(day=1)
+        end_date_obj = datetime.today()
+
+    total_income = Income.objects.filter(
+        user=request.user,
+        date__range=[start_date_obj, end_date_obj]
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    total_expenses = Expense.objects.filter(
+        user=request.user,
+        date__range=[start_date_obj, end_date_obj]
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+    net_budget = total_income - total_expenses
+
+    context = {
+        'start_date': start_date,
+        'end_date': end_date,
+        'total_income': total_income,
+        'total_expenses': total_expenses,
+        'net_budget': net_budget,
+    }
+
+    return render(request, 'budgets.html', context)

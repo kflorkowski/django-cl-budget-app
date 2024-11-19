@@ -28,7 +28,6 @@
         {% else %}
             <p>No budgets created yet.</p>
         {% endif %}
-        <a href="#">Create New Budget</a>
     </section>
 
     <section>
@@ -36,7 +35,7 @@
         {% if user_contribution %}
             <ul>
                 {% for contribution in user_contribution %}
-                    <li>{{contribution.amount}}</li>
+                    <li>Goal: {{contribution.goal.name}} | donated: {{contribution.amount}}</li>
                 {% endfor %}
             </ul>
         {% else %}
