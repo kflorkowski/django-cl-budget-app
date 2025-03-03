@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if request.resolver_match.url_name == "edit_expense" %}
+        <div>
+            <h2>Edit Expense</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div>
+                    <button type="submit" name="edit">Save</button>
+                    <button type="submit" name="delete">Delete</button>
+                </div>
+            </form>
+        </div>
+    {% elif request.resolver_match.url_name == "edit_income" %}
+        <div>
+            <h2>Edit Income</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div>
+                    <button type="submit" name="edit">Save</button>
+                    <button type="submit" name="delete">Delete</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+    <a href="{% url "transactions" %}">Back to Transactions</a>
+{% endblock  %}

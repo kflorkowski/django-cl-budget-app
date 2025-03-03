@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome, {{ user.username }}!</h1>
+
+    <section>
+        <h2>Your Goals</h2>
+        {% if user_goals %}
+            <ul>
+                {% for entry in user_goals %}
+                    <li>
+                        {{ entry.goal.name }}: {{ entry.total_contributions|floatformat:2 }} z {{ entry.goal.target_amount }} | {{ entry.progress|floatformat:2 }}%
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No goals set yet.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2>Previous Month Budget</h2>
+        {% if category_summary %}
+            <ul>
+                {% for summary in category_summary %}
+                    <li>
+                        <strong>{{ summary.category.name }}</strong> - 
+                        Expenses: {{ summary.total_expenses_in_category }} PLN | 
+                        Incomes: {{ summary.total_incomes_in_category }} PLN
+                    </li>
+                {% endfor %}
+                <p>Total Expenses: {{ total_expenses }} PLN</p>
+                <p>Total Incomes: {{ total_incomes }} PLN</p>
+                <p>Total Balance: {{ total_balance }} PLN</p>
+            </ul>
+        {% else %}
+            <p>No budgets created yet.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2>Your Contribution</h2>
+        {% if user_contribution %}
+            <ul>
+                {% for contribution in user_contribution %}
+                    <li>Goal: {{ contribution.goal.name }} | Donated: {{ contribution.amount }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No contributions made yet.</p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h2>Contributions to Your Goals</h2>
+        {% if other_contribution %}
+            <ul>
+                {% for contribution in other_contribution %}
+                    <li>Goal: {{ contribution.goal.name }} | {{ contribution.contributor }} donated: {{ contribution.amount }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No contributions to your goals yet.</p>
+        {% endif %}
+    </section>
+{% endblock %}

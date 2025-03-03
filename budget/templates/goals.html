@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section>
+        <h3>My Goals</h3>
+        {% if my_goals %}
+            <ul>
+                {% for my_goal in my_goals %}
+                    <li>{{ my_goal.name }}: {{ my_goal.current_amount }} z {{ my_goal.target_amount }} | {{ my_goal.current_percentage }}%</li>
+                    <p>{{ my_goal.description }}</p>
+                    <a href="{% url 'donation' my_goal.id %}">Donate</a>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No record yet.</p>
+        {% endif %}
+        <a href='{% url "add_goal" %}'>Create New Goal</a>
+    </section>
+
+    <section>
+        <h3>Others Goals</h3>
+        {% if others_goals %}
+            <ul>
+                {% for oth_goal in others_goals %}
+                    <li>{{ oth_goal.name }}: {{ oth_goal.current_amount }} z {{ oth_goal.target_amount }} | {{ oth_goal.current_percentage }}%</li>
+                    <p>{{ oth_goal.description }}</p>
+                    <a href="{% url 'donation' oth_goal.id %}">Donate</a>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No record yet.</p>
+        {% endif %}
+    </section>
+{% endblock %}
